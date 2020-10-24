@@ -385,13 +385,13 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
         }
     }
 
-    private String mTextPath = null;
+    private EditText textPath;
 
     private void loadDataFromText() {
         //创建文件路径对话框
         LinearLayout path = (LinearLayout) getLayoutInflater().inflate(R.layout.dialog_path, null);
 
-        EditText textPath = (EditText) path.findViewById(R.id.text_path);
+        textPath = (EditText) path.findViewById(R.id.text_path);
 
         new AlertDialog.Builder(this)
                 .setTitle("")
@@ -399,7 +399,8 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 .setPositiveButton("Finish", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        mTextPath = textPath.getText().toString();
+                        String mTextPath = textPath.getText().toString();
+                        loadDataFromPath(mTextPath);
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -410,7 +411,9 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 })
                 .create()
                 .show();
+    }
 
+    private void loadDataFromPath(String mTextPath){
         List<String> locations = new ArrayList<>();
 
         //读取文件
@@ -443,24 +446,26 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                     Log.d("TestFile", e.getMessage());
                 }
             }
-        }
 
-        for (String location : locations){
-            String[] datas = location.split(",");
-            float longitude = Float.parseFloat(datas[0].trim());
-            float latitude = Float.parseFloat(datas[1].trim());
-            LatLng pos = new LatLng(longitude, latitude);
-            markWaypoint(pos);
-            Waypoint mWaypoint = new Waypoint(latitude, longitude, altitude);
-            //Add Waypoints to Waypoint arraylist;
-            if (waypointMissionBuilder != null) {
-                waypointList.add(mWaypoint);
-                waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
-            } else {
-                waypointMissionBuilder = new WaypointMission.Builder();
-                waypointList.add(mWaypoint);
-                waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
+            for (String location : locations){
+                String[] datas = location.split(",");
+                float longitude = Float.parseFloat(datas[0].trim());
+                float latitude = Float.parseFloat(datas[1].trim());
+                LatLng pos = new LatLng(longitude, latitude);
+                markWaypoint(pos);
+                Waypoint mWaypoint = new Waypoint(latitude, longitude, altitude);
+                //Add Waypoints to Waypoint arraylist;
+                if (waypointMissionBuilder != null) {
+                    waypointList.add(mWaypoint);
+                    waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
+                } else {
+                    waypointMissionBuilder = new WaypointMission.Builder();
+                    waypointList.add(mWaypoint);
+                    waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
+                }
             }
+        }else{
+            Toast.makeText(this, "文件路径无效...", Toast.LENGTH_SHORT).show();
         }
     }
 

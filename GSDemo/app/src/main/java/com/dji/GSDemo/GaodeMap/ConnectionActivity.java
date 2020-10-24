@@ -10,10 +10,6 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +20,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import dji.common.error.DJIError;
 import dji.common.error.DJISDKError;
 import dji.log.DJILog;
@@ -120,7 +119,8 @@ public class ConnectionActivity extends Activity implements View.OnClickListener
         if (missingPermission.isEmpty()) {
             startSDKRegistration();
         } else {
-            showToast("Missing permissions!!!");
+//            showToast("Missing permissions!!!");
+            showToast("缺少权限！");
         }
     }
 
@@ -129,16 +129,19 @@ public class ConnectionActivity extends Activity implements View.OnClickListener
             AsyncTask.execute(new Runnable() {
                 @Override
                 public void run() {
-                    showToast( "registering, pls wait...");
+//                    showToast( "registering, please wait...");
+                    showToast("连接中，请稍后...");
                     DJISDKManager.getInstance().registerApp(getApplicationContext(), new DJISDKManager.SDKManagerCallback() {
                         @Override
                         public void onRegister(DJIError djiError) {
                             if (djiError == DJISDKError.REGISTRATION_SUCCESS) {
                                 DJILog.e("App registration", DJISDKError.REGISTRATION_SUCCESS.getDescription());
                                 DJISDKManager.getInstance().startConnectionToProduct();
-                                showToast("Register Success");
+//                                showToast("Register Success");
+                                showToast("连接成功");
                             } else {
-                                showToast( "Register sdk fails, check network is available");
+                                showToast("连接失败，请检查网络可用性...");
+//                                showToast( "Register sdk fails, check network is available");
                             }
                             Log.v(TAG, djiError.getDescription());
                         }
@@ -146,7 +149,8 @@ public class ConnectionActivity extends Activity implements View.OnClickListener
                         @Override
                         public void onProductDisconnect() {
                             Log.d(TAG, "onProductDisconnect");
-                            showToast("Product Disconnected");
+//                            showToast("Product Disconnected");
+                            showToast("连接中断");
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -157,7 +161,8 @@ public class ConnectionActivity extends Activity implements View.OnClickListener
                         @Override
                         public void onProductConnect(BaseProduct baseProduct) {
                             Log.d(TAG, String.format("onProductConnect newProduct:%s", baseProduct));
-                            showToast("Product Connected");
+//                            showToast("Product Connected");
+                            showToast("产品连接成功");
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
@@ -270,7 +275,7 @@ public class ConnectionActivity extends Activity implements View.OnClickListener
             mBtnOpen.setEnabled(true);
 
             String str = mProduct instanceof Aircraft ? "DJIAircraft" : "DJIHandHeld";
-            mTextConnectionStatus.setText("Status: " + str + " connected");
+            mTextConnectionStatus.setText("状态: " + str + " 已连接");
 
             if (null != mProduct.getModel()) {
                 mTextProduct.setText("" + mProduct.getModel().getDisplayName());
