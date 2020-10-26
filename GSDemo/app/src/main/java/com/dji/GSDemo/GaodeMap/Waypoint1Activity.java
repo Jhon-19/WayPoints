@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -74,7 +75,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
 
     private boolean isAdd = false;
 
-    private double droneLocationLat = 114.31, droneLocationLng = 30.52;
+    private double droneLocationLat = 30, droneLocationLng = 114;//武汉大学信息学部经纬度
     private final Map<Integer, Marker> mMarkers = new ConcurrentHashMap<Integer, Marker>();
     private Marker droneMarker = null;
 
@@ -295,7 +296,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
             }
         } else {
-            setResultToToast("Cannot Add Waypoint");
+            setResultToToast("不能添加此waypoint！");
         }
     }
 
@@ -353,7 +354,6 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                     public void run() {
                         aMap.clear();
                     }
-
                 });
                 waypointList.clear();
                 waypointMissionBuilder.waypointList(waypointList);
@@ -413,14 +413,15 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 .show();
     }
 
-    private void loadDataFromPath(String mTextPath){
+    private void loadDataFromPath(String mTextPath) {
         List<String> locations = new ArrayList<>();
 
         //读取文件
-        if (TextUtils.isEmpty(mTextPath)) {
+        if (!TextUtils.isEmpty(mTextPath)) {
 //            String content = ""; //文件内容字符串
+            String absolutelyPath = Environment.getExternalStorageDirectory().getAbsolutePath();//获取绝对路径
             //打开文件
-            File file = new File(mTextPath);
+            File file = new File(absolutelyPath + "/" + mTextPath);
             //如果path是传递过来的参数，可以做一个非目录的判断
             if (file.isDirectory()) {
                 Log.d("TestFile", "The File doesn't not exist.");
@@ -434,7 +435,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                         //分行读取
                         while ((line = buffreader.readLine()) != null) {
 //                            content += line + "\n";
-                            if (line.length() > 5){
+                            if (line.length() > 5) {
                                 locations.add(line);
                             }
                         }
@@ -442,12 +443,13 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                     }
                 } catch (java.io.FileNotFoundException e) {
                     Log.d("TestFile", "The File doesn't not exist.");
+                    Toast.makeText(this, "文件未找到...", Toast.LENGTH_SHORT).show();
                 } catch (IOException e) {
                     Log.d("TestFile", e.getMessage());
                 }
             }
 
-            for (String location : locations){
+            for (String location : locations) {
                 String[] datas = location.split(",");
                 float longitude = Float.parseFloat(datas[0].trim());
                 float latitude = Float.parseFloat(datas[1].trim());
@@ -464,7 +466,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                     waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
                 }
             }
-        }else{
+        } else {
             Toast.makeText(this, "文件路径无效...", Toast.LENGTH_SHORT).show();
         }
     }
@@ -474,7 +476,6 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
         float zoomlevel = (float) 18.0;
         CameraUpdate cu = CameraUpdateFactory.newLatLngZoom(pos, zoomlevel);
         aMap.moveCamera(cu);
-
     }
 
     private void enableDisableAdd() {
@@ -611,14 +612,14 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 waypointMissionBuilder.getWaypointList().get(i).altitude = altitude;
             }
 
-            setResultToToast("Set Waypoint attitude successfully");
+            setResultToToast("设置waypoint姿势成功");
         }
 
         DJIError error = getWaypointMissionOperator().loadMission(waypointMissionBuilder.build());
         if (error == null) {
-            setResultToToast("loadWaypoint succeeded");
+            setResultToToast("加载waypoint成功");
         } else {
-            setResultToToast("loadWaypoint failed " + error.getDescription());
+            setResultToToast("加载waypoint失败 " + error.getDescription());
         }
 
     }
@@ -629,9 +630,9 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
             @Override
             public void onResult(DJIError error) {
                 if (error == null) {
-                    setResultToToast("Mission upload successfully!");
+                    setResultToToast("任务点上传成功!");
                 } else {
-                    setResultToToast("Mission upload failed, error: " + error.getDescription() + " retrying...");
+                    setResultToToast("任务上传失败, error: " + error.getDescription() + " retrying...");
                     getWaypointMissionOperator().retryUploadMission(null);
                 }
             }
@@ -644,7 +645,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
         getWaypointMissionOperator().startMission(new CommonCallbacks.CompletionCallback() {
             @Override
             public void onResult(DJIError error) {
-                setResultToToast("Mission Start: " + (error == null ? "Successfully" : error.getDescription()));
+                setResultToToast("任务启动: " + (error == null ? "Successfully" : error.getDescription()));
             }
         });
 
@@ -655,7 +656,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
         getWaypointMissionOperator().stopMission(new CommonCallbacks.CompletionCallback() {
             @Override
             public void onResult(DJIError error) {
-                setResultToToast("Mission Stop: " + (error == null ? "Successfully" : error.getDescription()));
+                setResultToToast("任务终止: " + (error == null ? "Successfully" : error.getDescription()));
             }
         });
 

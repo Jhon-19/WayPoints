@@ -7,14 +7,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc7ce5d3-5cd9-449f-afe7-1f04e2a2740f" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dji/GSDemo/GaodeMap/ConnectionActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dji/GSDemo/GaodeMap/ConnectionActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dji/GSDemo/GaodeMap/Waypoint1Activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dji/GSDemo/GaodeMap/Waypoint1Activity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_connection.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_connection.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_waypoint1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_waypoint1.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../WayPoints" beforeDir="false" afterPath="$PROJECT_DIR$/../WayPoints" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -92,7 +89,7 @@
     <property name="ExportApk.SignV2" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="device.picker.selection" value="GSL0217313000169" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../../keystore/myKeyStore.jks" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Test" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="show.do.not.ask.upgrade.gradle.plugin" value="2.3.2" />
     <property name="show.migrate.to.gradle.popup" value="false" />
@@ -276,10 +273,10 @@
     <servers />
   </component>
   <component name="WindowStateProjectService">
-    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1603021110568">
+    <state x="421" y="96" key="FileChooserDialogImpl" timestamp="1603694159703">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1603021110568" />
+    <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1603694159703" />
     <state width="1238" height="154" key="GridCell.Tab.0.bottom" timestamp="1603028442312">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
