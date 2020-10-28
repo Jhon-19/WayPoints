@@ -10,8 +10,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/caches/build_file_checksums.ser" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/dji/GSDemo/GaodeMap/Waypoint1Activity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/dji/GSDemo/GaodeMap/Waypoint1Activity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_waypoint1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_waypoint1.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../WayPoints" beforeDir="false" afterPath="$PROJECT_DIR$/../WayPoints" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -22,7 +20,6 @@
     <option name="testRunner" value="GRADLE" />
     <option name="delegatedBuild" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="192.168.116.101:5555" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -89,7 +86,7 @@
     <property name="ExportApk.SignV2" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="device.picker.selection" value="GSL0217313000169" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../Test" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="not.eligible.for.single.variant.sync" value="true" />
     <property name="show.do.not.ask.upgrade.gradle.plugin" value="2.3.2" />
     <property name="show.migrate.to.gradle.popup" value="false" />
@@ -277,21 +274,21 @@
       <screen x="0" y="0" width="1280" height="680" />
     </state>
     <state x="421" y="96" key="FileChooserDialogImpl/0.0.1280.680@0.0.1280.680" timestamp="1603694159703" />
-    <state width="1238" height="154" key="GridCell.Tab.0.bottom" timestamp="1603028442312">
+    <state width="1238" height="154" key="GridCell.Tab.0.bottom" timestamp="1603701525183">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1238" height="154" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603028442312" />
-    <state width="1238" height="154" key="GridCell.Tab.0.center" timestamp="1603028442311">
+    <state width="1238" height="154" key="GridCell.Tab.0.bottom/0.0.1280.680@0.0.1280.680" timestamp="1603701525183" />
+    <state width="1238" height="154" key="GridCell.Tab.0.center" timestamp="1603701525183">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1238" height="154" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1603028442311" />
-    <state width="1238" height="154" key="GridCell.Tab.0.left" timestamp="1603028442311">
+    <state width="1238" height="154" key="GridCell.Tab.0.center/0.0.1280.680@0.0.1280.680" timestamp="1603701525183" />
+    <state width="1238" height="154" key="GridCell.Tab.0.left" timestamp="1603701525183">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1238" height="154" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1603028442311" />
-    <state width="1238" height="154" key="GridCell.Tab.0.right" timestamp="1603028442311">
+    <state width="1238" height="154" key="GridCell.Tab.0.left/0.0.1280.680@0.0.1280.680" timestamp="1603701525183" />
+    <state width="1238" height="154" key="GridCell.Tab.0.right" timestamp="1603701525183">
       <screen x="0" y="0" width="1280" height="680" />
     </state>
-    <state width="1238" height="154" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603028442311" />
+    <state width="1238" height="154" key="GridCell.Tab.0.right/0.0.1280.680@0.0.1280.680" timestamp="1603701525183" />
   </component>
 </project>

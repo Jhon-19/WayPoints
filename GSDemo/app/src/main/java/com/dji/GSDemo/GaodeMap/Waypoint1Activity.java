@@ -155,7 +155,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
             aMap.setOnMapClickListener(this);// add the listener for click for amap object
         }
 
-        LatLng wuhan = new LatLng(114.31, 30.52);
+        LatLng wuhan = new LatLng(30, 114);
         aMap.addMarker(new MarkerOptions().position(wuhan).title("Marker in Whuhan"));
         aMap.moveCamera(CameraUpdateFactory.newLatLng(wuhan));
     }
@@ -296,7 +296,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
             }
         } else {
-            setResultToToast("不能添加此waypoint！");
+            setResultToToast("不能添加waypoint！");
         }
     }
 
@@ -453,7 +453,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 String[] datas = location.split(",");
                 float longitude = Float.parseFloat(datas[0].trim());
                 float latitude = Float.parseFloat(datas[1].trim());
-                LatLng pos = new LatLng(longitude, latitude);
+                LatLng pos = new LatLng(latitude, longitude);
                 markWaypoint(pos);
                 Waypoint mWaypoint = new Waypoint(latitude, longitude, altitude);
                 //Add Waypoints to Waypoint arraylist;
@@ -465,6 +465,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                     waypointList.add(mWaypoint);
                     waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
                 }
+                Toast.makeText(this, "导入waypoint成功", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toast.makeText(this, "文件路径无效...", Toast.LENGTH_SHORT).show();
