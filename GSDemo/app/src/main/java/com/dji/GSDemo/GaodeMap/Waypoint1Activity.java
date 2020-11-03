@@ -79,16 +79,16 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
     private final Map<Integer, Marker> mMarkers = new ConcurrentHashMap<Integer, Marker>();
     private Marker droneMarker = null;
 
-    private float altitude = 100.0f;
-    private float mSpeed = 10.0f;
+    private float altitude = 30.0f;//初始高度30
+    private float mSpeed = 5.0f;//初始速度5
 
     private List<Waypoint> waypointList = new ArrayList<>();
 
     public static WaypointMission.Builder waypointMissionBuilder;
     private FlightController mFlightController;
     private WaypointMissionOperator instance;
-    private WaypointMissionFinishedAction mFinishedAction = WaypointMissionFinishedAction.NO_ACTION;
-    private WaypointMissionHeadingMode mHeadingMode = WaypointMissionHeadingMode.AUTO;
+    private WaypointMissionFinishedAction mFinishedAction = WaypointMissionFinishedAction.GO_HOME;//返回初始点
+    private WaypointMissionHeadingMode mHeadingMode = WaypointMissionHeadingMode.AUTO;//headingMode设为自动模式
 
     @Override
     protected void onResume() {
@@ -449,10 +449,14 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 }
             }
 
+            //读取经纬度坐标和高度
             for (String location : locations) {
                 String[] datas = location.split(",");
                 float longitude = Float.parseFloat(datas[0].trim());
                 float latitude = Float.parseFloat(datas[1].trim());
+
+                float altitude = Float.parseFloat(datas[2].trim());//导入altitude
+
                 LatLng pos = new LatLng(latitude, longitude);
                 markWaypoint(pos);
                 Waypoint mWaypoint = new Waypoint(latitude, longitude, altitude);
