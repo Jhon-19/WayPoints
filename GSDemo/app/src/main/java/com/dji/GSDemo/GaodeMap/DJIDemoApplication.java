@@ -13,6 +13,9 @@ import androidx.core.content.ContextCompat;
 
 import dji.sdk.base.BaseComponent;
 import dji.sdk.base.BaseProduct;
+import dji.sdk.camera.Camera;
+import dji.sdk.products.Aircraft;
+import dji.sdk.products.HandHeld;
 import dji.sdk.sdkmanager.DJISDKInitEvent;
 import dji.sdk.sdkmanager.DJISDKManager;
 import dji.common.error.DJIError;
@@ -50,6 +53,21 @@ public class DJIDemoApplication extends Application {
         return mProduct;
     }
 
+    public static synchronized Camera getCameraInstance() {
+
+        if (getProductInstance() == null) return null;
+
+        Camera camera = null;
+
+        if (getProductInstance() instanceof Aircraft) {
+            camera = ((Aircraft) getProductInstance()).getCamera();
+        } else if (getProductInstance() instanceof HandHeld) {
+            camera = ((HandHeld) getProductInstance()).getCamera();
+        }
+
+        return camera;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -65,7 +83,7 @@ public class DJIDemoApplication extends Application {
             //Listens to the SDK registration result
             @Override
             public void onRegister(DJIError djiError) {
-                if(djiError == DJISDKError.REGISTRATION_SUCCESS) {
+                if (djiError == DJISDKError.REGISTRATION_SUCCESS) {
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         @Override
@@ -95,6 +113,7 @@ public class DJIDemoApplication extends Application {
                 Log.d("TAG", "onProductDisconnect");
                 notifyStatusChange();
             }
+
             @Override
             public void onProductConnect(BaseProduct baseProduct) {
                 Log.d("TAG", String.format("onProductConnect newProduct:%s", baseProduct));
@@ -128,6 +147,7 @@ public class DJIDemoApplication extends Application {
                                 newComponent));
 
             }
+
             @Override
             public void onInitProcess(DJISDKInitEvent djisdkInitEvent, int i) {
 
@@ -147,7 +167,6 @@ public class DJIDemoApplication extends Application {
             //This is used to start SDK services and initiate SDK.
 //            DJISDKManager.getInstance().registerApp(getApplicationContext(), mDJISDKManagerCallback);
             Toast.makeText(getApplicationContext(), "registering, pls wait...", Toast.LENGTH_LONG).show();
-
         } else {
             Toast.makeText(getApplicationContext(), "Please check if the permission is granted.", Toast.LENGTH_LONG).show();
         }
@@ -159,13 +178,9 @@ public class DJIDemoApplication extends Application {
         mHandler.postDelayed(updateRunnable, 500);
     }
 
-    private Runnable updateRunnable = new Runnable() {
-
-        @Override
-        public void run() {
-            Intent intent = new Intent(FLAG_CONNECTION_CHANGE);
-            getApplicationContext().sendBroadcast(intent);
-        }
+    private Runnable updateRunnable = () -> {
+        Intent intent = new Intent(FLAG_CONNECTION_CHANGE);
+        getApplicationContext().sendBroadcast(intent);
     };
 
 }

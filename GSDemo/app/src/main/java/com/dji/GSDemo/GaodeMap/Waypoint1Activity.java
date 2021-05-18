@@ -27,6 +27,7 @@ import com.amap.api.maps2d.model.BitmapDescriptorFactory;
 import com.amap.api.maps2d.model.LatLng;
 import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -75,12 +76,12 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
 
     private boolean isAdd = false;
 
-    private double droneLocationLat = 30, droneLocationLng = 114;//武汉大学信息学部经纬度
+    private double droneLocationLat = 30.52626, droneLocationLng = 114.36265;//武汉大学信息学部经纬度
     private final Map<Integer, Marker> mMarkers = new ConcurrentHashMap<Integer, Marker>();
     private Marker droneMarker = null;
 
-    private float altitude = 30.0f;//初始高度30
-    private float mSpeed = 5.0f;//初始速度5
+    private float altitude = 100.0f;//初始高度100
+    private float mSpeed = 10.0f;//初始速度10
 
     private List<Waypoint> waypointList = new ArrayList<>();
 
@@ -89,6 +90,8 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
     private WaypointMissionOperator instance;
     private WaypointMissionFinishedAction mFinishedAction = WaypointMissionFinishedAction.GO_HOME;//返回初始点
     private WaypointMissionHeadingMode mHeadingMode = WaypointMissionHeadingMode.AUTO;//headingMode设为自动模式
+
+    private FloatingActionButton takePictureBtn;
 
     @Override
     protected void onResume() {
@@ -137,6 +140,8 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
 
         loadData = (Button) findViewById(R.id.load_data);
 
+        takePictureBtn = findViewById(R.id.take_picture_btn);
+
         locate.setOnClickListener(this);
         add.setOnClickListener(this);
         clear.setOnClickListener(this);
@@ -146,6 +151,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
         stop.setOnClickListener(this);
 
         loadData.setOnClickListener(this);
+        takePictureBtn.setOnClickListener(this);
     }
 
     private void initMapView() {
@@ -380,9 +386,18 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 loadDataFromText();
                 break;
             }
+            case R.id.take_picture_btn:{
+                startActivity(Waypoint1Activity.this, TakePictureActivity.class);
+                break;
+            }
             default:
                 break;
         }
+    }
+
+    public static void startActivity(Context context, Class activity) {
+        Intent intent = new Intent(context, activity);
+        context.startActivity(intent);
     }
 
     private EditText textPath;
@@ -435,7 +450,7 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                         //分行读取
                         while ((line = buffreader.readLine()) != null) {
 //                            content += line + "\n";
-                            if (line.length() > 5) {
+                            if (line.length() > 10) {
                                 locations.add(line);
                             }
                         }
@@ -449,17 +464,39 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                 }
             }
 
+            //获取点数
+            int num_point=0;
+            for (String location : locations) {
+                num_point = num_point + 1;
+            }
+
+            float altitude_read[] = new float[num_point];
+            float gimbalPitch_read[] = new float[num_point];
+            int heading_read[] = new int[num_point];
+
+            num_point=0;
+
             //读取经纬度坐标和高度
             for (String location : locations) {
                 String[] datas = location.split(",");
                 float longitude = Float.parseFloat(datas[0].trim());
                 float latitude = Float.parseFloat(datas[1].trim());
 
-                float altitude = Float.parseFloat(datas[2].trim());//导入altitude
+                //float altitude = Float.parseFloat(datas[2].trim());//导入altitude
+                //altitude_read[num_point] = altitude;
+                altitude_read[num_point]= Float.parseFloat(datas[2].trim());
+                gimbalPitch_read[num_point]= Float.parseFloat(datas[3].trim());
+                heading_read[num_point]= Integer.parseInt(datas[4].trim());
+
 
                 LatLng pos = new LatLng(latitude, longitude);
                 markWaypoint(pos);
-                Waypoint mWaypoint = new Waypoint(latitude, longitude, altitude);
+
+                Waypoint mWaypoint = new Waypoint(latitude, longitude,altitude_read[num_point]);
+                //mWaypoint.altitude=altitude_read[num_point];
+                //setResultToToast("读取文件时的高度："+mWaypoint.altitude);
+                //setResultToToast("读取文件时的waypoint："+mWaypoint);
+
                 //Add Waypoints to Waypoint arraylist;
                 if (waypointMissionBuilder != null) {
                     waypointList.add(mWaypoint);
@@ -470,7 +507,17 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
                     waypointMissionBuilder.waypointList(waypointList).waypointCount(waypointList.size());
                 }
                 Toast.makeText(this, "导入waypoint成功", Toast.LENGTH_SHORT).show();
+
+                num_point=num_point+1;
             }
+
+            //上传配置
+            configWayPointMission_altitude(altitude_read,gimbalPitch_read,heading_read);
+            //configWayPointMission();
+
+            //上传路线
+            uploadWayPointMission();
+
         } else {
             Toast.makeText(this, "文件路径无效...", Toast.LENGTH_SHORT).show();
         }
@@ -615,6 +662,47 @@ public class Waypoint1Activity extends FragmentActivity implements View.OnClickL
 
             for (int i = 0; i < waypointMissionBuilder.getWaypointList().size(); i++) {
                 waypointMissionBuilder.getWaypointList().get(i).altitude = altitude;
+            }
+
+            setResultToToast("设置waypoint姿势成功");
+        }
+
+        DJIError error = getWaypointMissionOperator().loadMission(waypointMissionBuilder.build());
+        if (error == null) {
+            setResultToToast("加载waypoint成功");
+        } else {
+            setResultToToast("加载waypoint失败 " + error.getDescription());
+        }
+
+    }
+
+    private void configWayPointMission_altitude(float[] altitude_read,float[] gimbalPitch_read,int[] heading_read) {
+
+        if (waypointMissionBuilder == null) {
+
+            waypointMissionBuilder = new WaypointMission.Builder().finishedAction(mFinishedAction)
+                    .headingMode(mHeadingMode)
+                    .autoFlightSpeed(mSpeed)
+                    .maxFlightSpeed(mSpeed)
+                    .flightPathMode(WaypointMissionFlightPathMode.NORMAL);
+
+        } else {
+            waypointMissionBuilder.finishedAction(mFinishedAction)
+                    .headingMode(mHeadingMode)
+                    .autoFlightSpeed(mSpeed)
+                    .maxFlightSpeed(mSpeed)
+                    .flightPathMode(WaypointMissionFlightPathMode.NORMAL);
+
+        }
+
+        if (waypointMissionBuilder.getWaypointList().size() > 0) {
+
+            for (int i = 0; i < waypointMissionBuilder.getWaypointList().size(); i++) {
+                waypointMissionBuilder.getWaypointList().get(i).altitude = altitude_read[i];
+                waypointMissionBuilder.getWaypointList().get(i).gimbalPitch = gimbalPitch_read[i];
+                waypointMissionBuilder.getWaypointList().get(i).heading = heading_read[i];
+                //setResultToToast("设置配置时的高度："+waypointMissionBuilder.getWaypointList().get(i).altitude);
+                //waypointMissionBuilder.getWaypointList().get(i).altitude = altitude;
             }
 
             setResultToToast("设置waypoint姿势成功");

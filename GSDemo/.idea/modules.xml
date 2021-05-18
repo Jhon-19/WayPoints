@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AMap_2DMap_V2.8.1_20160202/AMap_2DMap_V2.8.1_20160202.iml" filepath="$PROJECT_DIR$/.idea/modules/AMap_2DMap_V2.8.1_20160202/AMap_2DMap_V2.8.1_20160202.iml" group="GSDemo/AMap_2DMap_V2.8.1_20160202" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AMap_Search_V3.2.1_20160308/AMap_Search_V3.2.1_20160308.iml" filepath="$PROJECT_DIR$/.idea/modules/AMap_Search_V3.2.1_20160308/AMap_Search_V3.2.1_20160308.iml" group="GSDemo/AMap_Search_V3.2.1_20160308" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/GSDemo.iml" filepath="$PROJECT_DIR$/.idea/GSDemo.iml" group="GSDemo" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="GSDemo/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/GSDemo.iml" filepath="$PROJECT_DIR$/.idea/GSDemo.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AMap_2DMap_V2.8.1_20160202/GSDemo.AMap_2DMap_V2.8.1_20160202.iml" filepath="$PROJECT_DIR$/.idea/modules/AMap_2DMap_V2.8.1_20160202/GSDemo.AMap_2DMap_V2.8.1_20160202.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/AMap_Search_V3.2.1_20160308/GSDemo.AMap_Search_V3.2.1_20160308.iml" filepath="$PROJECT_DIR$/.idea/modules/AMap_Search_V3.2.1_20160308/GSDemo.AMap_Search_V3.2.1_20160308.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/GSDemo.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/GSDemo.app.iml" />
     </modules>
   </component>
 </project>

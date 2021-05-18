@@ -41,8 +41,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity"></activity>
-        <!-- DJI SDK -->
+        <activity android:name=".TakePictureActivity"></activity>
+        <activity android:name=".MainActivity" /> <!-- DJI SDK -->
         <uses-library android:name="com.android.future.usb.accessory" />
         <uses-library
             android:name="org.apache.http.legacy"
@@ -58,7 +58,6 @@
         <meta-data
             android:name="com.amap.api.v2.apikey"
             android:value="f413558d9cc8558bb9ac2fceb8c24b91" /> <!-- 输入申请的API key启用高德地图服务 -->
-
         <service android:name="dji.sdk.sdkmanager.DJIGlobalService" /> <!-- DJI SDK -->
         <activity
             android:name=".ConnectionActivity"
